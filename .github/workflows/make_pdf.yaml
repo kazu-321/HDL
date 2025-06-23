@@ -1,0 +1,44 @@
+name: Make PDF
+
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: write
+
+jobs:
+  make_pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install tools
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+                pandoc \
+                wkhtmltopdf \
+                fonts-ipafont \
+                python3 \
+                fonts-ipaexfont && \
+                fc-cache -fv
+      
+      - name: Make PDF
+        run: |
+          for md in $(find . -name "*.md"); do
+            directory=$(dirname "$md")
+            filename=$(basename "$md" .md)
+            pandoc "$md" -o "./pdf/${directory}/${filename}.pdf"  --pdf-engine wkhtmltopdf -f markdown+emoji
+          done
+      
+      - name: Push PDF files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update test result md and pdf via workflow" || echo "No changes to commit"
+          git push origin main
