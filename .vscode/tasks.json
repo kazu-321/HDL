@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "iverilog build and run (same dir)",
+      "type": "shell",
+      "command": "cd \"${fileDirname}\" && mkdir -p \"out\" && iverilog -o \"out/${fileBasenameNoExtension}.out\" \"${file}\" && cd \"out\" && vvp \"${fileBasenameNoExtension}.out\"",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "detail": "Compile and run current Verilog file in its own out/ dir"
+    }
+  ]
+}
