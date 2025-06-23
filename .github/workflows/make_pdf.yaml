@@ -32,7 +32,9 @@ jobs:
           for md in $(find . -name "*.md"); do
             directory=$(dirname "$md")
             filename=$(basename "$md" .md)
-            pandoc "$md" -o "./pdf/${directory}/${filename}.pdf"  --pdf-engine wkhtmltopdf -f markdown+emoji
+            outdir="./pdf/${directory}"
+            mkdir -p "$outdir"
+            pandoc "$md" -o "${outdir}/${filename}.pdf" --pdf-engine=wkhtmltopdf -f markdown+emoji || echo "Warning: Failed to convert $md"
           done
       
       - name: Push PDF files
