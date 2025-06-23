@@ -2,15 +2,19 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "iverilog build and run (same dir)",
+      "label": "iverilog build and run (all .v in same dir)",
       "type": "shell",
-      "command": "cd \"${fileDirname}\" && mkdir -p \"out\" && iverilog -o \"out/${fileBasenameNoExtension}.out\" \"${file}\" && cd \"out\" && vvp \"${fileBasenameNoExtension}.out\"",
+      "command": "sh",
+      "args": [
+        "-c",
+        "cd \"${fileDirname}\" && mkdir -p out && iverilog -o \"out/${fileBasenameNoExtension}.out\" ./*.v && cd out && vvp \"${fileBasenameNoExtension}.out\""
+      ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "problemMatcher": [],
-      "detail": "Compile and run current Verilog file in its own out/ dir"
+      "detail": "Compile and run all .v files in same dir into out/"
     }
   ]
 }
