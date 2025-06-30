@@ -29,12 +29,16 @@ jobs:
       
       - name: Make PDF
         run: |
+          current_dir=$(pwd)
           for md in $(find . -name "*.md"); do
             directory=$(dirname "$md")
             filename=$(basename "$md" .md)
             outdir="./pdf/${directory}"
             mkdir -p "$outdir"
-            pandoc "$md" -o "${outdir}/${filename}.pdf" --pdf-engine=wkhtmltopdf -f markdown+emoji --resource-path=".:$(dirname "$md")" || echo "Warning: Failed to convert $md"
+            outdir="$(realpath "$outdir")"
+            cd "$directory"
+            pandoc "${filename}.md" -o "${outdir}/${filename}.pdf" --pdf-engine=xelatex -V mainfont=IPAexGothic -f markdown+emoji --metadata title="${filename}" || echo "Warning: Failed to convert $md"
+            cd "$current_dir"
           done
       
       - name: Push PDF files
