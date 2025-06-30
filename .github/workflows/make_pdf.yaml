@@ -21,11 +21,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y --no-install-recommends \
                 pandoc \
-                texlive-xetex \
-                texlive-fonts-recommended \
-                texlive-latex-recommended \
-                texlive-latex-extra \
-                texlive-latex-base \
+                wkhtmltopdf \
                 fonts-ipafont \
                 python3 \
                 fonts-ipaexfont && \
@@ -41,7 +37,13 @@ jobs:
             mkdir -p "$outdir"
             outdir="$(realpath "$outdir")"
             cd "$directory"
-            pandoc "${filename}.md" -o "${outdir}/${filename}.pdf" --pdf-engine=xelatex -V mainfont=IPAexGothic -f markdown+emoji --metadata title="${filename}" --pdf-engine-opt=-shell-escape || echo "Warning: Failed to convert $md"
+            pandoc "${filename}.md" \
+              -o "${outdir}/${filename}.pdf" \
+              --pdf-engine=wkhtmltopdf \
+              --pdf-engine-opt=--enable-local-file-access \
+              -f markdown+emoji \
+              --metadata title="${filename}" \
+              || echo "Warning: Failed to convert $md"
             cd "$current_dir"
           done
       
