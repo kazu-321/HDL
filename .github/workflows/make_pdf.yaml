@@ -34,7 +34,7 @@ jobs:
             filename=$(basename "$md" .md)
             outdir="./pdf/${directory}"
             mkdir -p "$outdir"
-            pandoc "$md" -o "${outdir}/${filename}.pdf" --pdf-engine=wkhtmltopdf -f markdown+emoji --resource-path=.:$(dirname "$md") || echo "Warning: Failed to convert $md"
+            pandoc "$md" -o "${outdir}/${filename}.pdf" --pdf-engine=wkhtmltopdf -f markdown+emoji --resource-path=".:$(dirname "$md")" || echo "Warning: Failed to convert $md"
           done
       
       - name: Push PDF files
