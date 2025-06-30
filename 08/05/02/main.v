@@ -10,11 +10,10 @@ module circuit_test;
         $monitor("x1=%b x2=%b z=%b", x1, x2, z);
         
         // Test cases
-        #10;     x1 = 0; x2 = 0; 
-        #10;     x1 = 0; x2 = 1; 
-        #10;     x1 = 1; x2 = 0; 
-        #10;     x1 = 1; x2 = 1; 
-
+        x1 = 0; x2 = 0; #10;
+        x1 = 0; x2 = 1; #10;
+        x1 = 1; x2 = 0; #10;
+        x1 = 1; x2 = 1; #10;
         $finish;
     end
 endmodule
