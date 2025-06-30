@@ -25,6 +25,7 @@ jobs:
                 texlive-fonts-recommended \
                 texlive-latex-recommended \
                 texlive-latex-extra \
+                texlive-latex-base \
                 fonts-ipafont \
                 python3 \
                 fonts-ipaexfont && \
