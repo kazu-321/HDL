@@ -21,7 +21,10 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y --no-install-recommends \
                 pandoc \
-                wkhtmltopdf \
+                texlive-xetex \
+                texlive-fonts-recommended \
+                texlive-latex-recommended \
+                texlive-latex-extra \
                 fonts-ipafont \
                 python3 \
                 fonts-ipaexfont && \
