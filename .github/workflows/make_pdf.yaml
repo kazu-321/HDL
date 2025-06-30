@@ -40,7 +40,7 @@ jobs:
             mkdir -p "$outdir"
             outdir="$(realpath "$outdir")"
             cd "$directory"
-            pandoc "${filename}.md" -o "${outdir}/${filename}.pdf" --pdf-engine=xelatex -V mainfont=IPAexGothic -f markdown+emoji --metadata title="${filename}" || echo "Warning: Failed to convert $md"
+            pandoc "${filename}.md" -o "${outdir}/${filename}.pdf" --pdf-engine=xelatex -V mainfont=IPAexGothic -f markdown+emoji --metadata title="${filename}" --pdf-engine-opt=-shell-escape || echo "Warning: Failed to convert $md"
             cd "$current_dir"
           done
       
