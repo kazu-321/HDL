@@ -3,7 +3,7 @@ module kadai09_6_test;
 reg [1:0] a,b;
 wire [3:0] z;
 
-kadai09_6 k(a,b,z);
+kadai09_6_1 k(a,b,z);
 
 initial begin
     $dumpfile("kadai09_6_test.vcd");
