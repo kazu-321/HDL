@@ -24,7 +24,8 @@ jobs:
                 wkhtmltopdf \
                 fonts-ipafont \
                 python3 \
-                fonts-ipaexfont && \
+                fonts-ipaexfont \
+                poppler-utils &&\
                 fc-cache -fv
       
       - name: Make PDF
@@ -45,6 +46,16 @@ jobs:
               --metadata title="${filename}" \
               || echo "Warning: Failed to convert $md"
             cd "$current_dir"
+          done
+        
+      - name: Merge PDFs by directory
+        run: |
+          for dir in ./pdf/*/; do
+            dirname=$(basename "$dir")
+            pdfs=$(find "$dir" -name "*.pdf" | sort)
+            if [ -n "$pdfs" ]; then
+              pdfunite $pdfs "$dir/${dirname}.pdf"
+            fi
           done
       
       - name: Push PDF files
