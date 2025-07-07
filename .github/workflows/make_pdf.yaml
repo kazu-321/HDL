@@ -52,6 +52,7 @@ jobs:
         run: |
           for dir in ./pdf/*/; do
             dirname=$(basename "$dir")
+            rm -f "$dir/${dirname}.pdf"
             pdfs=$(find "$dir" -name "*.pdf" | sort)
             if [ -n "$pdfs" ]; then
               pdfunite $pdfs "$dir/${dirname}.pdf"
