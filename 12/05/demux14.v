@@ -1,0 +1,20 @@
+module demux14(
+    input a,
+    input [1:0] s,
+    output [3:0] z
+);
+    function [3:0] demux;
+        input a;
+        input [1:0] s;
+        begin
+            case (s)
+                2'b00: demux = {3'b000, a}; 
+                2'b01: demux = {2'b00, a, 1'b0};
+                2'b10: demux = {1'b0, a, 2'b00}; 
+                2'b11: demux = {a, 3'b000};
+                default: demux = 4'bxxxx;
+            endcase
+        end
+    endfunction
+    assign z = demux(a, s);
+endmodule
